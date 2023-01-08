@@ -1,2 +1,141 @@
 @import './common';
 @import './example';
+
+// reset
+img {
+    display: block;
+    width: 100%;
+    height: 230px;
+    object-fit: cover
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+}
+/* RESET END */
+
+
+/* COMMON START */
+.container {
+    padding: 5px 15px;
+}
+
+/* HEADER START */
+header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    padding: 10px 0;
+    background-color:#c170ef;
+    z-index: 999;
+    box-shadow: 0px 0px 30px 1px rgba(117, 117, 117, 0.75) inset,
+    0px 11px 9px -5px rgba(175, 175, 175, 0.75);
+}
+
+.search__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-form {
+    position: relative;
+    width: 480px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.search-form input {
+    width: 451px;
+    padding: 15px;
+    border: none;
+    outline: none;
+}
+
+.search-form button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50px;
+    padding: 0;
+    background-color: white;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.search__icon {
+    padding: 10px;
+    transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search__icon:hover {
+    fill: #0066cc;
+    transform: scale(1.20) rotate(360deg);
+}
+.search-form button:focus {
+    fill: #0066cc;
+    transform: scale(1.20) rotate(360deg);
+}
+/* HEADER END */
+
+
+/* MAIN START */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.gallery a {
+    width: 300px;
+    height: 300px;
+    z-index: 9;
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 2px 4px #000;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery a:hover,
+.gallery a:focus {
+    transform: scale(1.1);
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    height: 30px;
+    font-size: 15px;
+    padding: 23px 10px;
+    margin: 0;
+    gap: 10px;
+    background-color: #0066cc;
+}
+
+.info__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
