@@ -39,7 +39,7 @@ const onEntry = entries => {
     entries.forEach(async entry => {
       if (entry.isIntersecting && getEl('.img-link')) {
         page += 1;
-        const value = getEl('.search-form').elements.searchQuery.value;
+        const value = getEl('.search-form').elements.searchQuery.value.trim();
         await API.getData(value, page).then(res => {
           if (res.data.hits.length === 0) {
             page -= 1;
