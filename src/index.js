@@ -4,6 +4,9 @@ import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import API from './js/api';
 import { createMarkup } from './js/markup';
+// import PixabayAPIService from "./js/api";
+
+// const pixabayAPIService = new PixabayAPIService();
 
 const lightbox = new SimpleLightbox('.gallery a', {
   docClose: true,
@@ -18,6 +21,7 @@ const perPage = 40;
 getEl('.search-form').addEventListener('submit', onSubmit);
 getEl('.gallery').addEventListener('click', e => e.preventDefault());
 
+// функція після натискання на кнопку форми
 async function onSubmit(e) {
   e.preventDefault();
   const value = getEl('.search-form').elements.searchQuery.value;
@@ -47,6 +51,42 @@ async function onSubmit(e) {
   });
 }
 
+// const responseData = API.getData(data, page);
+// const imageData = responseData.data.hits;
+// (imageData.length < per_page || (page * per_page) >= responseData.data.totalHits)
+// для сповіщення, що завершились картинки на cats (500 зображень)
+
+const onEntry = entries => {
+  entries.forEach(async entry => {
+    if (entry.isIntersecting && getEl('.img-link')) {
+      page += 1;
+      const value = getEl('.search-form').elements.searchQuery.value.trim();
+      await API.getData(value, page).then(res => {
+        if (res.data.hits.length === 0 
+          // && pixabayAPIService.lengthArrayPhotos < pixabayAPIService.perPage
+          ) {
+          page -= 1;
+          Notiflix.Notify.warning(
+            "We're sorry, but you've reached the end of search results."
+          );
+          return;
+        } else {
+          createMarkup(res.data.hits, getEl('.gallery'));
+          lightbox.refresh();
+        }
+      });
+    }
+  });
+};
+
+
+
+const observer = new IntersectionObserver(onEntry, {
+rootMargin: '100px',
+});
+observer.observe(getEl('footer'));
+
+
 // function onSubmit(e) {
 //   e.preventDefault();
 //   const value = getEl('.search-form').elements.searchQuery.value;
@@ -64,37 +104,3 @@ async function onSubmit(e) {
 //       }
 //   });
 // }
-
-// const responseData = API.getData(data, page);
-// const imageData = responseData.data.hits;
-// (imageData.length < per_page || (page * per_page) >= responseData.data.totalHits)
-// для сповіщення, що завершились картинки на cats (500 зображень)
-
-const currentPage = this.page;
-
-const onEntry = entries => {
-  entries.forEach(async entry => {
-    if (entry.isIntersecting && getEl('.img-link')) {
-      page += 1;
-      const value = getEl('.search-form').elements.searchQuery.value.trim();
-      await API.getData(value, page).then(res => {
-        if (res.data.hits.length === 0 || 
-          currentPage !== 1) {
-          page -= 1;
-          Notiflix.Notify.warning(
-            "We're sorry, but you've reached the end of search results."
-          );
-          return;
-        } else {
-          createMarkup(res.data.hits, getEl('.gallery'));
-          lightbox.refresh();
-        }
-      });
-    }
-  });
-};
-
-const observer = new IntersectionObserver(onEntry, {
-rootMargin: '100px',
-});
-observer.observe(getEl('footer'));
