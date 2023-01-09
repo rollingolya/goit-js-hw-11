@@ -77,28 +77,7 @@ const onEntry = entries => {
   });
 };
 
-
-
 const observer = new IntersectionObserver(onEntry, {
 rootMargin: '100px',
 });
 observer.observe(getEl('footer'));
-
-
-// function onSubmit(e) {
-//   e.preventDefault();
-//   const value = getEl('.search-form').elements.searchQuery.value;
-//   getEl('.gallery').innerHTML = '';
-//   page = 1;
-//   API.getData(value, page).then(res => {
-//       if (res.data.hits.length === 0) {
-//           return Notiflix.Notify.failure(
-//               'Sorry, there are no images matching your search query. Please try again'
-//           );
-//       } else {
-//           Notiflix.Notify.success(`Hooray! We found ${res.data.totalHits} images`);
-//           createMarkup(res.data.hits, getEl('.gallery'));
-//           lightbox.refresh();
-//       }
-//   });
-// }
