@@ -17,17 +17,15 @@ button {
     border: none;
     cursor: pointer;
 }
-/* RESET END */
 
 
-/* COMMON START */
+// common
 .container {
     padding: 5px 15px;
 }
-/* COMMON END */
 
 
-/* HEADER START */
+// header
 header {
     position: fixed;
     top: 0;
@@ -93,10 +91,9 @@ header {
     fill: #0066cc;
     transform: scale(1.20) rotate(360deg);
 }
-/* HEADER END */
 
 
-/* MAIN START */
+// main
 .gallery {
     display: flex;
     flex-wrap: wrap;

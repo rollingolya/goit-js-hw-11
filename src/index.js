@@ -17,7 +17,6 @@ const perPage = 40;
 const totalHits = 500;
 
 getEl('.search-form').addEventListener('submit', onSubmit);
-getEl('.gallery').addEventListener('click', e => e.preventDefault());
 
 // функція після натискання на кнопку форми
 async function onSubmit(e) {
@@ -53,6 +52,8 @@ async function onSubmit(e) {
 // (imageData.length < per_page || (page * per_page) >= responseData.data.totalHits)
 // для сповіщення, що завершились картинки на cats (500 зображень)
 
+getEl('.gallery').addEventListener('click', e => e.preventDefault());
+
 const onEntry = entries => {
   entries.forEach(async entry => {
     if (entry.isIntersecting && getEl('.img-link')) {
@@ -60,10 +61,7 @@ const onEntry = entries => {
       const value = getEl('.search-form').elements.searchQuery.value.trim();
 
       const res = await API.getData(value, page)
-        if (res.data.hits.length === 0 
-          // && res.page >= 13
-          && (res.data.totalHits)/40 <= res.page
-          ) {
+        if (res.data.hits.length === 0 || res.page >= 13) {
           page -= 1;
           Notiflix.Notify.warning(
             "We're sorry, but you've reached the end of search results."
