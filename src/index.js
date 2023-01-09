@@ -47,11 +47,6 @@ async function onSubmit(e) {
       };
 }
 
-// const responseData = API.getData(data, page);
-// const imageData = responseData.data.hits;
-// (imageData.length < per_page || (page * per_page) >= responseData.data.totalHits)
-// для сповіщення, що завершились картинки на cats (500 зображень)
-
 getEl('.gallery').addEventListener('click', e => e.preventDefault());
 
 const onEntry = entries => {
@@ -61,7 +56,9 @@ const onEntry = entries => {
       const value = getEl('.search-form').elements.searchQuery.value.trim();
 
       const res = await API.getData(value, page)
-        if (res.data.hits.length === 0 || res.page >= 13) {
+        if (res.data.hits.length < 40 || res.page * 40 >= res.data.totalHits 
+          || page >= 12) 
+        {
           page -= 1;
           Notiflix.Notify.warning(
             "We're sorry, but you've reached the end of search results."
