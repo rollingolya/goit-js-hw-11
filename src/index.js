@@ -58,9 +58,12 @@ const onEntry = entries => {
     if (entry.isIntersecting && getEl('.img-link')) {
       page += 1;
       const value = getEl('.search-form').elements.searchQuery.value.trim();
+
       const res = await API.getData(value, page)
         if (res.data.hits.length === 0 
-          && res.page >= 13) {
+          // && res.page >= 13
+          && (res.data.totalHits)/40 <= res.page
+          ) {
           page -= 1;
           Notiflix.Notify.warning(
             "We're sorry, but you've reached the end of search results."
