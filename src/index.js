@@ -4,9 +4,6 @@ import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import API from './js/api';
 import { createMarkup } from './js/markup';
-// import PixabayAPIService from "./js/api";
-
-// const pixabayAPIService = new PixabayAPIService();
 
 const lightbox = new SimpleLightbox('.gallery a', {
   docClose: true,
@@ -17,6 +14,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
 const getEl = selector => document.querySelector(selector);
 let page = 1;
 const perPage = 40;
+const totalHits = 500;
 
 getEl('.search-form').addEventListener('submit', onSubmit);
 getEl('.gallery').addEventListener('click', e => e.preventDefault());
@@ -62,8 +60,7 @@ const onEntry = entries => {
       const value = getEl('.search-form').elements.searchQuery.value.trim();
       const res = await API.getData(value, page)
         if (res.data.hits.length === 0 
-          // && pixabayAPIService.lengthArrayPhotos < pixabayAPIService.perPage
-          ) {
+          && res.page >= 13) {
           page -= 1;
           Notiflix.Notify.warning(
             "We're sorry, but you've reached the end of search results."
