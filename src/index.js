@@ -38,7 +38,7 @@ async function onSubmit(e) {
     return;
   }
 
-  const pic = API.getData(value, page).then(res => {
+  const res = await API.getData(value, page)
       if (res.data.hits.length === 0) {
           return Notiflix.Notify.failure(
               'Sorry, there are no images matching your search query. Please try again'
@@ -47,8 +47,7 @@ async function onSubmit(e) {
           Notiflix.Notify.success(`Hooray! We found ${res.data.totalHits} images`);
           createMarkup(res.data.hits, getEl('.gallery'));
           lightbox.refresh();
-      }
-  });
+      };
 }
 
 // const responseData = API.getData(data, page);
@@ -61,7 +60,7 @@ const onEntry = entries => {
     if (entry.isIntersecting && getEl('.img-link')) {
       page += 1;
       const value = getEl('.search-form').elements.searchQuery.value.trim();
-      await API.getData(value, page).then(res => {
+      const res = await API.getData(value, page)
         if (res.data.hits.length === 0 
           // && pixabayAPIService.lengthArrayPhotos < pixabayAPIService.perPage
           ) {
@@ -73,8 +72,7 @@ const onEntry = entries => {
         } else {
           createMarkup(res.data.hits, getEl('.gallery'));
           lightbox.refresh();
-        }
-      });
+        };
     }
   });
 };
